@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Christian's Kino</title>
+    <link rel="stylesheet" href="stylesheet.css" type="text/css">
+</head>
+<body>
+    <h1>Velg film</h1>
+    <input type="radio" id="rdTobias" class="film" name="filmnavn" checked data-pris="89" value="''Tobias the Movie''"><label id="tobias">Tobias the Movie</label>
+    <input type="radio" id="rdSmaaspioner" class="film" name="filmnavn" data-pris="149" value="''Småspioner''"><label id="smaaspioner">Småspioner</label>
+    <input type="radio" id="rdRødhette" class="film" name="filmnavn" data-pris="199" value="''Sannheten om rødhette''"><label id="rødhette">Sannheten om rødhette</label>
+    <input type="radio" id="rdParasite" class="film" name="filmnavn" data-pris="199" value="''Parasite''"><label id="parasite">Parasite</label>
+    
+    <h1>Velg tilbehør</h1>  
+    <input type="checkbox" id="chkKuliA" class="tilbehor" name="tilbehor" value="Kuli Appelsin" data-pris="25"><label for="chkKuliA">Kuli Appelsin </label>
+    <input type="checkbox" id="chkPopcorn" class="tilbehor" name="tilbehor" value="Popcorn" data-pris="50"><label for="chkPopcorn">Popcorn</label>
+    <input type="checkbox" id="chkBruspulver" class="tilbehor" name="tilbehor" value="Bruspulver" data-pris="20"><label for="chkBruspulver">Bruspulver</label>
+    <input type="checkbox" id="chkKnatter" class="tilbehor" name="tilbehor" value="Knatter" data-pris="35"><label for="chkKnatter">Knatter</label>
+    <input type="checkbox" id="chkGomp" class="tilbehor" name="tilbehor" value="Gomp" data-pris="15"><label for="chkGomp">Gomp</label>
+    <input type="checkbox" id="chkFanta" class="tilbehor" name="tilbehor" value="Fanta" data-pris="40"><label for="chkFanta">Fanta</label>
+    <input type="checkbox" id="chkCola" class="tilbehor" name="tilbehor" value="Coca Cola" data-pris="40"><label for="chkCola">Coca Cola</label>
+     
+     
+      
+       <br><br>
+       <div id="bestilling"></div>
+       <br><br>
+    <input type="button" id="btnBestilling" value="Bestill">
+      
+      <div id="kvittering"></div>
+       
+       
+       
+       
+</body>
+<script>
+    let bestillingKnapp = document.getElementById("btnBestilling");
+    let bestillingtxt = document.getElementById("bestilling");
+    const kvittering = document.getElementById("kvittering");
+    
+    function getFilm(){
+        let tobias = document.getElementById("rdTobias");
+        let smaaspioner = document.getElementById("rdSmaaspioner");
+        let rødhette = document.getElementById("rdRødhette");
+        let parasite = document.getElementById("parasite");
+        
+        
+        if(tobias.checked){
+            return {film : tobias.value, pris : tobias.getAttribute("data-pris")};
+        } else if(smaaspioner.checked){
+            return {film : smaaspioner.value, pris : smaaspioner.getAttribute("data-pris")};
+        } else if(rødhette.checked){
+            return {film : rødhette.value, pris : rødhette.getAttribute("data-pris")};
+        } else if(parasite.checked){
+            return {film : parasite.value, pris : parasite.getAttribute("data-pris")};
+        }else{
+            alert("Velg en film");
+        }
+        
+        
+    }; 
+    
+    function getTilbehor(){
+        let tilbehor = document.getElementsByClassName("tilbehor");
+        let valgtTilbehor = [];
+        
+        for(let i = 0; i<tilbehor.length; i++){
+            if(tilbehor[i].checked){
+                valgtTilbehor.push({tilbehor : tilbehor[i].value, pris : tilbehor[i].getAttribute("data-pris")});
+              }
+        
+        
+        }
+        return valgtTilbehor;
+    }
+    
+    
+    
+    function bestill(){
+        let film = getFilm();
+        let tilbehor = getTilbehor();
+        let tilbehortxt = "";
+        let totalpris = +film.pris;
+        
+        
+        for(let i =0; i<tilbehor.length; i++){
+            tilbehortxt += tilbehor[i].tilbehor + " " + tilbehor[i].pris + "kr" + ", ";
+            totalpris += +tilbehor[i].pris;
+        }
+        
+        
+       bestilling.innerHTML = "Du har bestilt bilett til filmen "+ film.film + " " + film.pris + "kr" + " med tilbehøret " + tilbehortxt + " som totalt blir " + totalpris + "kr.";
+        
+      return totalpris;
+        
+      
+
+    }
+    
+    function kvitteringen(){
+        let film = getFilm();
+        let tilbehor = getTilbehor();
+        let totalpris = bestill();
+        
+        
+        
+        kvittering.innerHTML = "<h1 class = 'bestil'>Bestilt!</h1>" + film.film + " " + film.pris + "kr<br>";
+        
+        for(let i = 0; i < tilbehor.length; i++){
+        kvittering.innerHTML += tilbehor[i].tilbehor + " " + tilbehor[i].pris + "kr<br>";
+       }
+        kvittering.innerHTML += "Totalpris = " + totalpris + " " + "kr";
+        kvittering.style.opacity = 1; 
+    }
+    
+    
+    
+    bestillingKnapp.addEventListener("click", kvitteringen)
+    document.querySelectorAll("input").forEach(function(e){e.addEventListener("click", bestill)});
+    
+    
+    
+</script>
+</html>
