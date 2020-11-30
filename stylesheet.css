@@ -1,0 +1,29 @@
+#kvittering{
+    position: absolute;
+    opacity: 1;
+    left: 62%;
+    top: 15%;
+}
+.bestil{
+    font-size: 40px:
+}
+#bestilling{
+    width: 48%;
+}
+
+body{
+    background-image: url(kino.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+}
+.bilder{
+    display: inline-block;
+    margin-left: 15px;
+}
+.bilder > *{
+    display: block;
+}
+.pic1{
+    height: 200px;
+}
